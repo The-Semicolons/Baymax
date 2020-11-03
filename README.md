@@ -16,7 +16,7 @@ Logging into firebase
 
 **Note -** Login with The Semicolons email id.
 
-### Workflow
+## Workflow
 
 1. Pull
 2. `yarn install` (To install all dependencies)
