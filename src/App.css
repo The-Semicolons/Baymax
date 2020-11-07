@@ -1,50 +1,17 @@
-.btn{
-  height: 80px;
-  width: 250px;
+.background{
+    background-image: url("Background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
 }
 
-.background {
-  background-color: rgb(202, 69, 69);
-  height: 100vh;
+.navbarimg{
+    height: 30px;
 }
 
-.btn1{
-  height: 40px;
-  width: 70px;
-  
-}
-.footer{
-  position: fixed; 
-  padding: 10px 10px 0px 10px; 
-  bottom: 0; 
-  width: 100%; 
-  height: 70px; 
-
-}
-.header{
-  position:fixed;
-  padding: 10px 10px 0px 10px; 
-  top: 0; 
-  width: 100%; 
-  height: 70px;
-
-}
-.image{
-  height: 70px;
-  width: 80px;
-  top: 0;
-  position: fixed;
-}
-.left{
-  position: fixed;
-
-}
-
-.right{
-  bottom: 0;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  text-align: end;
-  right: 0;
+.chatarea{
+    background-color: rgba(192, 37, 41, 0.85);
+    height: 77.5vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
