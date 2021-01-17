@@ -1,0 +1,96 @@
+<mainScreenLayout>:
+    canvas.before:
+        Color:
+            rgba: 0.753, 0.145, 0.16, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "vertical"
+        ActionBar:
+            pos_hint: {'top':1}
+            ActionView:
+                use_separator: True
+                ActionPrevious:
+                    title: '   BAYMAX'
+                    with_previous: False
+                    app_icon: './assets/icons/baymaxIcon.png'
+                ActionOverflow:
+                ActionButton:
+                    icon: 'atlas://data/images/defaulttheme/audio-volume-high'
+                ActionButton:
+                    text: 'Settings'
+                ActionButton:
+                    text: 'Help'
+                ActionButton:
+                    text: 'About'
+
+        Label:
+            size_hint: (1, 0.08)
+
+        BoxLayout:
+            orientation: "horizontal"
+
+            Label:
+                size_hint: (0.2, 1)
+                text: "Buffer"
+
+            BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 0.3
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                size_hint: (0.6, 1)
+                orientation: 'vertical'
+                padding: 10, 10
+                row_default_height: '48dp'
+                row_force_default: True
+                spacing: 10, 10
+                ScrollView:
+                    id: ChatAreaScrollView
+                    size: self.size
+                    GridLayout:
+                        id: ChatArea
+                        size_hint_y: None
+                        cols: 1
+                        row_default_height: '20dp'
+                        row_force_default: True
+                        spacing: 0, 0
+                        padding: 0, 0
+
+                BoxLayout:
+                    canvas.before:
+                        Color:
+                            rgba: 0.196, 0.235, 0.27, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    orientation: "horizontal"
+                    padding: 7.5
+                    size_hint: (1, 0.09)
+                    TextInput:
+                        size_hint: (0.9, None)
+                        pos_hint: {"center_x": True}
+                        height: self.minimum_height
+                        hint_text: "Enter text here..."
+                        multiline: False
+                        font_size: 20
+                        padding: 9
+                    Button:
+                        size_hint: (0.2, 1)
+                        text: "Send"
+                        on_press: root.onSendButtonPress()
+                    Button:
+                        size_hint: (0.2, 1)
+                        text: "Speak"
+                        on_press: app.onSpeakButtonPress()
+
+            Label:
+                size_hint: (0.2, 1)
+                text: "Buffer/Options"
+
+        Label:
+            size_hint: (1, 0.08)
