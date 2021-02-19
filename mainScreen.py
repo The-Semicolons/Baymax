@@ -18,7 +18,7 @@ class mainScreenLayout(BoxLayout):
         chatArea = self.ids['ChatArea']
         label = Label(text="Send button clicked")
         chatArea.add_widget(label)
-        self.ids['ChatAreaScrollView'].scroll_to(label)
+        #self.ids['ChatAreaScrollView'].scroll_to(label)
 
 
 # Actual window
