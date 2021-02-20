@@ -13,5 +13,5 @@ from mainScreen import mainScreenApp
 
 if __name__ == '__main__':
     #splashScreenApp().run()
-    #mainScreenApp().run()
-    pass
+    mainScreenApp().run()
+

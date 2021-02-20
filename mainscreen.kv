@@ -1,11 +1,11 @@
 <mainScreenLayout>:
+
     canvas.before:
         Color:
             rgba: 0.753, 0.145, 0.16, 1
         Rectangle:
             pos: self.pos
             size: self.size
-
     BoxLayout:
         orientation: "vertical"
         ActionBar:
@@ -54,15 +54,29 @@
                     size: self.size
                     do_scroll_y: True
                     do_scroll_x: False
-                    scroll_y: 1
+                    scroll_y: 0
                     GridLayout:
-                        id: ChatArea
                         size_hint_y: None
-                        cols: 1
-                        row_default_height: '20dp'
-                        row_force_default: True
-                        spacing: 0, 0
-                        padding: 0, 0
+                        height: self.minimum_height
+                        cols: 2
+                        GridLayout:
+                            id: ChatArea1
+                            size_hint_y: None
+                            height: self.minimum_height
+                            cols: 1
+                            row_default_height: '30dp'
+                            row_force_default: True
+                            spacing: 0, 0
+                            padding: 0, 0
+                        GridLayout:
+                            id: ChatArea2
+                            size_hint_y: None
+                            height: self.minimum_height
+                            cols: 1
+                            row_default_height: '30dp'
+                            row_force_default: True
+                            spacing: 0, 0
+                            padding: 0, 0
 
                 BoxLayout:
                     canvas.before:
@@ -75,6 +89,7 @@
                     padding: 7.5
                     size_hint: (1, 0.09)
                     TextInput:
+                        id: message_box
                         size_hint: (0.9, None)
                         pos_hint: {"center_x": True}
                         height: self.minimum_height
