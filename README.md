@@ -11,3 +11,5 @@ The Health Assistant is capable of diagnosing diseases by taking voice/text as a
 - pyttsx3
 - PyAudio
 - SpeechRecognition
+- OpenCV
+- NLTK
