@@ -1,0 +1,37 @@
+<reportsAnalyserScreen>:
+    canvas.before:
+        Color:
+            rgba: 0.753, 0.145, 0.16, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        ActionBar:
+            pos_hint: {'top':1}
+            ActionView:
+                use_separator: True
+                ActionPrevious:
+                    title: '   BAYMAX'
+                    with_previous: False
+                    app_icon: './assets/icons/baymaxIcon.png'
+                ActionOverflow:
+                ActionButton:
+                    icon: 'atlas://data/images/defaulttheme/audio-volume-high'
+                ActionButton:
+                    text: 'Home'
+                    on_press: root.onHomeButtonPress()
+                ActionButton:
+                    text: 'Help'
+                ActionButton:
+                    text: 'About'
+
+        Label:
+            size_hint: (1, 0.08)
+
+        BoxLayout:
+            orientation: "horizontal"
+
+            Label:
+                size_hint: (0.2, 1)
+                text: " "

@@ -1,23 +1,18 @@
 #Created by Vanshaj Goel 
-#pip3 install SpeechRecognition
-#pip3 install pyttsx3
-#File name- SpeechAndTextProcessing.py
-#For Text To Speech--> You just need to make object of class "SpeechTextProcessing" and call the method "SpeechToText"
-#Function will return the detected text, you need to make a variable to store and print the text
-#For Text To Speech--> You need to create object and call the method "TextToSpeech" by passing text as argument
 
 import speech_recognition
 from googletrans import Translator
 import pyttsx3
-class SpeechTextProcessing:
 
-    def __init__(self):
+class SpeechTextProcessing:
+    def __init__(self, gender):
             self.r = speech_recognition.Recognizer()
             self.engine = pyttsx3.init('sapi5')
             self.voices = self.engine.getProperty('voices')
             self.translator = Translator()
+            self.engine.setProperty('voice', self.voices[gender].id)
 
-    def SpeechToText(self):
+    def speechToText(self):
         with speech_recognition.Microphone() as source:
             audio = self.r.listen(source)
 
@@ -29,16 +24,10 @@ class SpeechTextProcessing:
         except speech_recognition.RequestError as e:
             print("Could not request results! Contact developer")
 
-    def TextToSpeechFemale(self, audio):
-        self.engine.setProperty('voice', self.voices[2].id)
-        self.engine.say(audio)
-        self.engine.runAndWait()
-        
-    def TextToSpeechMale(self, audio):
-        self.engine.setProperty('voice', self.voices[0].id)
+    def textToSpeech(self, audio):
         self.engine.say(audio)
         self.engine.runAndWait()
 
-    def HindiToEnglish(self,text):
+    def hindiToEnglish(self,text):
         translation = self.translator.translate(text, dest='en')
         return translation.text

@@ -1,7 +1,7 @@
 # File created by Utkarsh Gupta
-# Dated 27/12/2020
+# Dated 20/02/2020
 
-# Touched on 30/12/2020 by Utkarsh Gupta
+# Touched on 20/02/2020 by Utkarsh Gupta
 
 # Main function : Program execution starts and ends here.
 
@@ -13,5 +13,6 @@ from mainScreen import mainScreenApp
 
 if __name__ == '__main__':
     #splashScreenApp().run()
-    mainScreenApp().run()
+    var = mainScreenApp()
+    var.run()
 

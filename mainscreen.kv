@@ -20,7 +20,8 @@
                 ActionButton:
                     icon: 'atlas://data/images/defaulttheme/audio-volume-high'
                 ActionButton:
-                    text: 'Settings'
+                    text: 'Reports Analyser'
+                    on_press: app.onReportsAnalyserButtonPress()
                 ActionButton:
                     text: 'Help'
                 ActionButton:
@@ -34,7 +35,7 @@
 
             Label:
                 size_hint: (0.2, 1)
-                text: "Buffer"
+                text: " "
 
             BoxLayout:
                 canvas.before:
@@ -106,9 +107,18 @@
                         text: "Speak"
                         on_press: app.onSpeakButtonPress()
 
-            Label:
+            BoxLayout:
                 size_hint: (0.2, 1)
-                text: "Buffer/Options"
+                orientation: "vertical"
+                Label:
+                    size_hint: (1, 0.8)
+                    text: " "
+                Button:
+                    size_hint: (1, 0.1)
+                    text: "Print Prescription"
+                Button:
+                    size_hint: (1, 0.1)
+                    text: "Upload Reports"
 
         Label:
             size_hint: (1, 0.08)

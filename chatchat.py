@@ -69,23 +69,13 @@ def greetingFemaleHindi():
         print("नमस्कार")
     else:
         speak.TextToSpeechFemale("namaskaar")
-        print("नमस्कार")        
-
-stopWords = set(stopwords.words('english'))
-filteredWords = []
-tags = []
-lemWords = []
-y = 'yes'
-n = 'no'
-no = 'nope'
-yes = 'yeah'
-ps = WordNetLemmatizer()
+        print("नमस्कार")
         
 def start():
     speak = sp.SpeechTextProcessing()
     gender = gd.video()
     warnings.filterwarnings(action = "ignore")
-    if(gender == "man"):
+    if gender == "man":
     
         print("Please Select a Language: English/Hindi \n कृपया एक भाषा चुनें:   अंग्रेजी / हिंदी")
         
