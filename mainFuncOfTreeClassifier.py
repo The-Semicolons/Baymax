@@ -12,10 +12,10 @@ silence_tensorflow()
 
 def runFinalModel(a):
     tree = treeClassifier()
-    tree.getParameterList(noOfTree=100,
-                          maxTreeDepth=5,
-                          learningRate=0.1,
-                          noOfBatchesPerLayer=2)
+    tree.getParameterList(noOfTree=5,
+                          maxTreeDepth=7,
+                          learningRate=0.15,
+                          noOfBatchesPerLayer=30)  #these parameters have lowest loss & highest accuracy
     
     tree.loadFiles()
     tree.generateFeatureColumn()

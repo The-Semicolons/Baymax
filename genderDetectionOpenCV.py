@@ -71,8 +71,6 @@ def video():
         break
 
 
-
-    print(label_final)
 # release resources
     webcam.release()
     cv2.destroyAllWindows()

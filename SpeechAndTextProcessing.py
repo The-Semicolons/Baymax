@@ -1,4 +1,4 @@
-#Created by Vanshaj Goel on 29th January 2021
+#Created by Vanshaj Goel 
 #pip3 install SpeechRecognition
 #pip3 install pyttsx3
 #File name- SpeechAndTextProcessing.py
