@@ -12,7 +12,7 @@ from splashScreen import splashScreenApp
 from mainScreen import mainScreenApp
 
 if __name__ == '__main__':
-    #splashScreenApp().run()
-    var = mainScreenApp()
-    var.run()
+    splashScreenApp().run()
+    #mainScreenApp().run()
+
 

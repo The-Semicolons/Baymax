@@ -105,7 +105,7 @@
                     Button:
                         size_hint: (0.2, 1)
                         text: "Speak"
-                        on_press: app.onSpeakButtonPress()
+                        on_press: root.onSpeakButtonPress()
 
             BoxLayout:
                 size_hint: (0.2, 1)
@@ -119,6 +119,10 @@
                 Button:
                     size_hint: (1, 0.1)
                     text: "Upload Reports"
+                Button:
+                    size_hint: (1, 0.1)
+                    text: "Start Medbot"
+                    on_press: root.start()
 
         Label:
             size_hint: (1, 0.08)
