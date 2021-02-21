@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
-
+import mysql.connector 
+from mysql.connector import Error
 class graph:
     def __init__ (self, list1 = None, list2 = None):
         if list1 is None:
@@ -8,52 +9,60 @@ class graph:
         if list2 is None:
             list2 = []
         self.list2 = list2
+        self.host = 'sql12.freemysqlhosting.net'
+        self.database = 'sql12394214'
+        self.user = 'sql12394214'
+        self.password = 'CJz7DFaZw1'
+        self.conn = mysql.connector.connect(host = 'sql12.freemysqlhosting.net',
+                                            database = 'sql12394214',
+                                            user = 'sql12394214',
+                                            password = 'CJz7DFaZw1')
+        self.cursor = self.conn.cursor(buffered=True)
+
+    def plotDB(self):
+        try:
+            
+            self.conn = mysql.connector.connect(host = 'sql12.freemysqlhosting.net',
+                                                database = 'sql12394214',
+                                                user = 'sql12394214',
+                                                password = 'CJz7DFaZw1')
+            if self.conn.is_connected():
+                print("connection with Database Successful")
+                self.cursor = self.conn.cursor(buffered=True)
+                name = input("Enter Patient Name: ")
+                self.cursor.execute("select * from patientHistory where patientName like '%" + name + "%'")
+                record = self.cursor.fetchone()
+                for i in range(0,12):
+                    self.list1.append(record[i])
+            
+                self.conn.commit()
+        except Error as e:
+            print("Error while connecting to Database ", e)
+
+        # closing database connection
+        finally:
+            if self.conn.is_connected():
+                self.cursor.close()
+                self.conn.close()
+                print("Database connection closed.")
+        print(self.list1)
+        return self.list1
+
+
+
 
     def plotting (self):
-        plt.ylim(0, 5)
-        plt.xlim(0,5)
-        plt.plot(self.list1, label = 'calculated value')
+        plt.ylim(0,120)
+        plt.xlim(0,12)
+        plt.plot(self.list1, label = 'Patient RBC')
         plt.legend()
-        plt.plot(self.list2, label = 'ideal value')
+        self.list2 = [5,5,5,5,5,5,5,5,5,5,5,5]
+        plt.plot(self.list2, label = 'Standard Value of RBC')
         plt.legend()
-        plt.title('Leucocyte Count')
+        plt.title('Red Blood Cell Count')
         plt.show()
         
+        return plt.show()
+         
 
-
-calc = [2.5, 4, 3.1, 2.9, 3.3]
-ideal = [3, 3, 3, 3, 3]
-obj = graph(calc, ideal)
-obj.plotting()
-# =============================================================================
-# 
-# 
-# 
-#  def plotDB(self):
-#         try:
-#             self.conn = mysql.connector.connect(self.host,self.database,self.user,self.password)
-#             
-#             if self.conn.is_connected():
-#                 print("Connection with Database Successful")
-#                 cursor = self.conn.cursor(buffered=True)
-#                 name = input("Enter Patient Name: ")
-#                 cursor.execute("select * from patientHistory where patientName like '%"+name+"%'")
-#                 record = cursor.fetchone()
-#                 print(record[0])
-#                 self.conn.commit()
-#         except Error as e:
-#             print("Error while connecting to Database ", e)
-# 
-#         # closing database connection
-#         finally:
-#             if self.conn.is_connected():
-#                 cursor.close()
-#                 self.conn.close()
-#                 print("Database connection closed.")
-#         
-# host = 'sql12.freemysqlhosting.net'
-# database = 'sql12394214'
-# user = 'sql12394214'
-# password = 'CJz7DFaZw1'
-# conn = mysql.connector.connect(host,database,user,password)
-# =============================================================================
+ 
