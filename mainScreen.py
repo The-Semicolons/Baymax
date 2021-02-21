@@ -22,6 +22,7 @@ from GenderDetection import genderDetectionOpenCV as gd
 import symptomList
 import DiseaseToMedicine
 import TreeRunner as tr
+import exportToDatabase as database
 
 from reportsAnalyserScreen import reportsAnalyserScreenApp
 
@@ -53,8 +54,9 @@ class mainScreenLayout(BoxLayout):
         self.index = 0
         self.pdf = None
         self.medication = None
+        self.DB = None
         self.questions = ["self.start1()", "self.start2()", "self.start3()", "self.predictDisease()",
-                          "self.predictMedication()", "self.printPrescription()"]
+                          "self.predictMedication()", "self.printPrescription()", "self.startExportingToDatabase()"]
 
     def onSendButtonPress(self):
         chatArea = self.ids['ChatArea2']
@@ -227,7 +229,11 @@ class mainScreenLayout(BoxLayout):
         self.pdf.header()
         self.pdf.introduce()
         self.pdf.pdf_output()
-
+    
+    def startExportingToDatabase(self):
+        self.arrangeData()
+        self.DB = database.exportToDB(self.name, self.age, self.gender, self.disease, self.symptoms, self.medication)
+        self.DB.export()
 
 # Actual window
 class mainScreenApp(App):
