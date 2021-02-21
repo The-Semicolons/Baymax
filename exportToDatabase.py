@@ -33,28 +33,35 @@ class exportToDB:
         self.database = 'sql12394214'
         self.user = 'sql12394214'
         self.password = 'CJz7DFaZw1'
-        
+        self.conn = mysql.connector.connect(host = 'sql12.freemysqlhosting.net',
+                                            database = 'sql12394214',
+                                            user = 'sql12394214',
+                                            password = 'CJz7DFaZw1')
+        self.cursor = self.conn.cursor(buffered=True)
     def export(self):
         try:
-            conn = mysql.connector.connect(self.host,self.database,self.user,self.password)
             
-            if conn.is_connected():
-                print("Connection with Database Successful")
-                cursor = conn.cursor(buffered=True)
+            self.conn = mysql.connector.connect(host = 'sql12.freemysqlhosting.net',
+                                                database = 'sql12394214',
+                                                user = 'sql12394214',
+                                                password = 'CJz7DFaZw1')
+            if self.conn.is_connected():
+                print("connection with Database Successful")
+                self.cursor = self.conn.cursor(buffered=True)
                 
                 insertQuery = "INSERT INTO patientDetails VALUES(%s, %s, %s, %s, %s, %s, %s)"
                 values = (self.datetime, self.name, self.sex, self.age, self.x, self.disease, self.y)
-                cursor.execute(insertQuery, values)
+                self.cursor.execute(insertQuery, values)
 
-                conn.commit()
+                self.conn.commit()
         except Error as e:
             print("Error while connecting to Database ", e)
 
         # closing database connection
         finally:
-            if conn.is_connected():
-                cursor.close()
-                conn.close()
+            if self.conn.is_connected():
+                self.cursor.close()
+                self.conn.close()
                 print("Database connection closed.")
-    
+
     
