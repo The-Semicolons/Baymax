@@ -27,3 +27,4 @@ AI based MedBot to diagnose diseases and prescribe medicines in health care cent
 - SpeechRecognition
 - OpenCV
 - NLTK
+- mysql.connector
