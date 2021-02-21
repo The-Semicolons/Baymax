@@ -116,12 +116,13 @@
                 Button:
                     size_hint: (1, 0.1)
                     text: "Print Prescription"
+                    on_press: root.printPrescription()
                 Button:
                     size_hint: (1, 0.1)
                     text: "Upload Reports"
                 Button:
                     size_hint: (1, 0.1)
-                    text: "Start Medbot"
+                    text: "Start/Restart Medbot"
                     on_press: root.start()
 
         Label:

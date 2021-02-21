@@ -13,11 +13,11 @@ pdf.add_page()
 class pdfGenerator:
     def header(self):
         pdf.set_font("Arial", 'B', size = 28)    
-        pdf.image('./assets/images/Baymax.jpg', x = 8, y = 1, w = 40, h = 30, type = '', link = '')  #putting a logo
-        pdf.cell(160, 10, txt = "Baymax", ln =1, align = 'C')   #heading
+        pdf.image('./assets/images/Baymax.jpg', x = 8, y = 1, w = 40, h = 30, type = '', link = '')
+        pdf.cell(160, 10, txt = "Baymax", ln =1, align = 'C')
 
-    def __init__ (self, datetime, name, age, sex, disease, symptoms=None, medications=None):
-        datetime = datetime.datetime.now().replace(second=0, microsecond=0)
+    def __init__ (self, name, age, sex, disease, symptoms=None, medications=None):
+        self.datetime = datetime.datetime.now().replace(second=0, microsecond=0)
         self.datetime = str(datetime)
         self.name = name
         self.age = str(age)
@@ -26,17 +26,14 @@ class pdfGenerator:
         if symptoms is None:
             symptoms = []
         self.symptoms = symptoms
-        #for x in symptoms:
-            #self.x = str(x)
-            #print(self.x)
-        x = ', '.join(map(str, symp))
+        x = ', '.join(map(str, self.symptoms))
         self.x = x
         self.disease = disease
 
         if medications is None:
             medications = []
         self.medications = medications
-        y = "\n".join(map(str, meds))
+        y = ', '.join(map(str, self.medications))
         self.y = y
 
     def introduce (self):
@@ -48,23 +45,11 @@ class pdfGenerator:
         pdf.cell(60, -48, txt = "Symptoms - " + self.x, ln = 1, align = 'L')
         pdf.set_font("Arial", 'B', size = 20)  
         pdf.cell(60, 80, txt = "Predicted disease - " + self.disease, ln = 1, align = 'L')
-        #pdf.cell(60, 70, txt = "Prescribed medications - " + self.y, ln = 1, align = 'L')
-        pdf.set_font("Arial", size = 20)  
-        pdf.multi_cell(200, 10, "Prescribed medications - " + self.y, 0, 0) 
+        pdf.set_font("Arial", size = 20)
+        pdf.cell(200, 10, txt="Prescribed medications - " + self.y, ln=1, align='L')
 
     def pdf_output(self):
         now = datetime.datetime.now()
         dt_string = now.strftime("%d%m%Y%H%M%S")
         output = str(self.name + dt_string) 
         pdf.output(output + ".pdf")
-
- 
-
-symp = ["Pain", "Headache", "Cough"]
-meds = ["Crocin", "Paracetamole", "Anacin", "Volini", "Balm"]
-
-
-obj = pdfGenerator(datetime, "John Cena", "49", "Male", "Viral Infection", symp, meds)       
-obj.header()
-obj.introduce()
-obj.pdf_output()

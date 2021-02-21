@@ -15,10 +15,12 @@ import datetime
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+import pdfGenerator as pdfgen
 import warnings
 import SpeechAndTextProcessing as sp
 from GenderDetection import genderDetectionOpenCV as gd
 import symptomList
+import DiseaseToMedicine
 import TreeRunner as tr
 
 from reportsAnalyserScreen import reportsAnalyserScreenApp
@@ -28,13 +30,17 @@ class mainScreenLayout(BoxLayout):
     def __init__(self, **kwargs):
         super(mainScreenLayout, self).__init__(**kwargs)
         warnings.filterwarnings('ignore')
+        self.gender = "Male"
+        '''
         self.gender = gd.video()
         if self.gender == "man":
             self.speak = sp.SpeechTextProcessing(0)
         else:
             self.speak = sp.SpeechTextProcessing(1)
         print(self.gender)
-        #self.speak = sp.SpeechTextProcessing(1)
+        '''
+        self.tree = tr.TreeRunner()
+        self.speak = sp.SpeechTextProcessing(1)
         # user details
         self.name = None
         self.age = None
@@ -45,7 +51,10 @@ class mainScreenLayout(BoxLayout):
         self.message = None
         self.data = list()
         self.index = 0
-        self.questions = ["self.start1()", "self.start2()", "self.start3()", "self.predict()"]
+        self.pdf = None
+        self.medication = None
+        self.questions = ["self.start1()", "self.start2()", "self.start3()", "self.predictDisease()",
+                          "self.predictMedication()", "self.printPrescription()"]
 
     def onSendButtonPress(self):
         chatArea = self.ids['ChatArea2']
@@ -63,16 +72,15 @@ class mainScreenLayout(BoxLayout):
         chatArea.bind(minimum_height=chatArea.setter('height'))
         chatArea.add_widget(label)
         self.ids['ChatAreaScrollView'].scroll_to(label)
-        if self.index > 3:
+        if self.index > 6:
             return
         else:
             exec(self.questions[self.index])
             self.index += 1
 
-
-    def onBaymaxResponse(self, message):
+    def onBaymaxResponse(self, message, font="ARIAL"):
         chatArea = self.ids['ChatArea1']
-        label = Label(text=message, font_size='20dp')
+        label = Label(text=message, font_size='20dp', font_name=font)
         chatArea.bind(minimum_height=chatArea.setter('height'))
         chatArea.add_widget(label)
         self.ids['ChatAreaScrollView'].scroll_to(label)
@@ -81,6 +89,25 @@ class mainScreenLayout(BoxLayout):
         chatArea.bind(minimum_height=chatArea.setter('height'))
         chatArea.add_widget(label)
         self.ids['ChatAreaScrollView'].scroll_to(label)
+
+    def onSpeakButtonPress(self):
+        message = self.speak.speechToText()
+        chatArea = self.ids['ChatArea2']
+        label = Label(text=message, font_size='20dp')
+        self.data.append(message)
+        chatArea.bind(minimum_height=chatArea.setter('height'))
+        chatArea.add_widget(label)
+        self.ids['ChatAreaScrollView'].scroll_to(label)
+        chatArea = self.ids['ChatArea1']
+        label = Label(text=" ", font_size='20dp')
+        chatArea.bind(minimum_height=chatArea.setter('height'))
+        chatArea.add_widget(label)
+        self.ids['ChatAreaScrollView'].scroll_to(label)
+        if self.index > 6:
+            return
+        else:
+            exec(self.questions[self.index])
+            self.index += 1
 
     def greetingEnglish(self):
         hour = int(datetime.datetime.now().hour)
@@ -98,40 +125,53 @@ class mainScreenLayout(BoxLayout):
         hour = int(datetime.datetime.now().hour)
         if 0 <= hour < 12:
             self.speak.textToSpeech("Shubh Prabhaat")
-            self.onBaymaxResponse("शुभ प्रभात")
+            self.onBaymaxResponse("शुभ प्रभात", "MANGAL")
         elif 12 <= hour < 17:
             self.speak.textToSpeech("namaskaar")
-            self.onBaymaxResponse("नमस्कार")
+            self.onBaymaxResponse("नमस्कार", "MANGAL")
         else:
             self.speak.textToSpeech("namaskaar")
-            self.onBaymaxResponse("नमस्कार")
+            self.onBaymaxResponse("नमस्कार", "MANGAL")
 
     def start(self):
-        self.onBaymaxResponse("Please Select a Language: English/Hindi")
-        self.onBaymaxResponse("कृपया एक भाषा चुनें:   अंग्रेजी / हिंदी")
-        self.speak.textToSpeech("Please Select a Language: English/Hindi")
-        self.speak.textToSpeech("Kripya eak Bhaashaaa Chunei: Angrezi yaa Hindi")
+        self.onBaymaxResponse("Please Select a Language: English / Hindi")
+        self.onBaymaxResponse("कृपया एक भाषा चुनें: अंग्रेजी / हिंदी", "MANGAL")
+        self.speak.textToSpeech("Please Select a Language: English or Hindi. Kripya eak Bhaashaaa Chunei: Angrezi yaa Hindi")
 
     def start1(self):
-        self.speak.textToSpeech("Hello there!")
-        self.onBaymaxResponse("Hello there!")
-        self.speak.textToSpeech("I'm Baymax, Your Personal Health Assistant")
-        self.onBaymaxResponse("I'm Baymax, Your Personal Health Assistant")
-        self.speak.textToSpeech("I need some of your personal details to serve you better. So, Let's get started.")
-        self.onBaymaxResponse("I need some of your personal details to serve you better. So, Let's get started.")
-        self.speak.textToSpeech("What's your name?")
-        self.onBaymaxResponse("What's your name?")
+        self.language = self.data[0]
+        self.language = self.language.lower()
+        if self.language == "english":
+            self.greetingEnglish()
+            self.speak.textToSpeech("I'm Baymax, Your Personal Health Care companion. I need some of your personal "
+                                    "details to serve you better. So, Let's get started. First of all What's your name?")
+            self.onBaymaxResponse("I'm Baymax, Your Personal Health Care companion.")
+            self.onBaymaxResponse("I need some of your personal details to serve you better.")
+            self.onBaymaxResponse("So, Let's get started")
+            self.onBaymaxResponse("What's your name?")
+        else:
+            self.greetingHindi()
+            self.speak.textToSpeech("Mai Baymax, aapka swasthya dekhbhaal sahaayak. moojhe aapki koocch jaankaari ki"
+                                    "zaroorat hai, Kripya apna naam batae")
+            self.onBaymaxResponse("अपना नाम दर्ज करें: ", "MANGAL")
 
     def start2(self):
-        self.speak.textToSpeech("What is your age")
-        self.onBaymaxResponse("What is your age?")
+        if self.language == "english":
+            self.speak.textToSpeech("What is your age")
+            self.onBaymaxResponse("What is your age?")
+        else:
+            self.speak.textToSpeech("Hello " + self.data[1] + ", Aapki oomra kitni hai")
+            self.onBaymaxResponse("कृपया अपनी उम्र दर्ज करें: ", "MANGAL")
 
     def start3(self):
-        self.speak.textToSpeech("What are the symptoms that you are facing")
-        self.onBaymaxResponse("What are the symptoms that you are facing...")
+        if self.language == "english":
+            self.speak.textToSpeech("What are the symptoms that you are facing")
+            self.onBaymaxResponse("What are the symptoms that you are facing...")
+        else:
+            self.speak.textToSpeech("Aapko kya pareshaniya ho rahi hai")
+            self.onBaymaxResponse("कृपया अपने लक्षण दर्ज करें: ", "MANGAL")
 
     def processData(self):
-        print("process")
         self.symptoms = self.data[3].split(" ")
         patientSymptomsFinal = [i.lower() for i in self.symptoms]
         allSymptoms = symptomList.symptomList()
@@ -142,17 +182,51 @@ class mainScreenLayout(BoxLayout):
             for j in range(131):
                 if (patientSymptomsFinal[i] == allSymptoms[j]):
                     symptomListForPrediction[j] = 1
-
         return symptomListForPrediction
 
-    def predict(self):
-        print("predict")
-        self.tree = tr.TreeRunner()
+    def arrangeData(self):
+        self.name = self.data[1]
+        self.age = self.data[2]
+
+    def predictDisease(self):
         self.disease = self.tree.predict(self.processData())
-        self.speak.textToSpeech("Processing! please wait for few minutes...")
-        self.onBaymaxResponse("Processing! please wait for few minutes...")
-        self.speak.textToSpeech(("You might have " + str(self.disease)))
-        self.onBaymaxResponse(("You might have " + str(self.disease)))
+        if self.language == "english":
+            self.speak.textToSpeech(("You might have " + str(self.disease)))
+            self.onBaymaxResponse(("You might have " + str(self.disease)))
+        else:
+            self.speak.textToSpeech("Aapko" + str(self.disease) + "Hone ki ashanka hai.")
+            self.onBaymaxResponse("आपको " + str(self.disease) + " होने की आशंका है", "MANGAL")
+
+    def predictMedication(self):
+        if self.language == "english":
+            self.speak.textToSpeech("Let me write you some medications.")
+            self.onBaymaxResponse("Let me write you some medications.")
+        else:
+            self.speak.textToSpeech("Mai aapko kuch dawaiya likh deta hu.")
+            self.onBaymaxResponse("मै आपको कुछ दवाइयां लिख देता हूँ", "MANGAL")
+        self.medication = list()
+        for item in self.symptoms:
+            try:
+                self.medication = self.medication.append(DiseaseToMedicine.DrugName[item])
+            except KeyError:
+                pass
+        try:
+            self.medication = self.medication.append(DiseaseToMedicine.DrugName[self.disease])
+        except KeyError:
+            pass
+
+    def printPrescription(self):
+        if self.language == "english":
+            self.speak.textToSpeech("Your prescription is being printed.")
+            self.onBaymaxResponse("Your prescription is being printed.")
+        else:
+            self.speak.textToSpeech("Aapka prescription print ho raha hai.")
+            self.onBaymaxResponse("आपका प्रिस्क्रिप्शन प्रिंट हो रहा है.", "MANGAL")
+        self.arrangeData()
+        self.pdf = pdfgen.pdfGenerator(self.name, self.age, self.gender, self.disease, self.symptoms, self.medication)
+        self.pdf.header()
+        self.pdf.introduce()
+        self.pdf.pdf_output()
 
 
 # Actual window
@@ -162,9 +236,6 @@ class mainScreenApp(App):
         self.icon = "./assets/icons/baymaxIcon.png"
         Window.fullscreen = 'auto'
         return mainScreenLayout()
-
-    def onSpeakButtonPress(self):
-        print("Speak")
 
     def onReportsAnalyserButtonPress(self):
         self.get_running_app().stop()
