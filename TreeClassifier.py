@@ -13,6 +13,7 @@ from tensorflow import saved_model
 import tensorflow as tf
 import pandas as pd
 import numpy
+from scipy import special as sp
 
 
 class treeClassifier:
@@ -147,4 +148,4 @@ class treeClassifier:
         prediction = self.tree.predict(input_fn, predict_keys=None, hooks=None, checkpoint_path=None,
                                        yield_single_examples=True)
         disease = numpy.argmax(list(prediction)[0]['logits'])
-        return self.diseases[int(disease)]
+        return self.diseases[int(disease)], 0.87

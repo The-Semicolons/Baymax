@@ -20,10 +20,8 @@
                 ActionButton:
                     icon: 'atlas://data/images/defaulttheme/audio-volume-high'
                 ActionButton:
-                    text: 'Reports Analyser'
-                    on_press: app.onReportsAnalyserButtonPress()
-                ActionButton:
                     text: 'Help'
+                    on_press: root.onHelpPress()
                 ActionButton:
                     text: 'About'
 
@@ -119,7 +117,8 @@
                     on_press: root.printPrescription()
                 Button:
                     size_hint: (1, 0.1)
-                    text: "Upload Reports"
+                    text: "Analyse Reports"
+                    on_press: root.onAnalyseButtonPress()
                 Button:
                     size_hint: (1, 0.1)
                     text: "Start/Restart Medbot"

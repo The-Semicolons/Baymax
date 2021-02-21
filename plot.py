@@ -19,7 +19,7 @@ class graph:
                                             password = 'CJz7DFaZw1')
         self.cursor = self.conn.cursor(buffered=True)
 
-    def plotDB(self):
+    def plotDB(self, name):
         try:
             
             self.conn = mysql.connector.connect(host = 'sql12.freemysqlhosting.net',
@@ -29,7 +29,6 @@ class graph:
             if self.conn.is_connected():
                 print("connection with Database Successful")
                 self.cursor = self.conn.cursor(buffered=True)
-                name = input("Enter Patient Name: ")
                 self.cursor.execute("select * from patientHistory where patientName like '%" + name + "%'")
                 record = self.cursor.fetchone()
                 for i in range(0,12):
@@ -52,7 +51,7 @@ class graph:
 
 
     def plotting (self):
-        plt.ylim(0,120)
+        plt.ylim(0,12)
         plt.xlim(0,12)
         plt.plot(self.list1, label = 'Patient RBC')
         plt.legend()
@@ -63,6 +62,3 @@ class graph:
         plt.show()
         
         return plt.show()
-         
-
- 

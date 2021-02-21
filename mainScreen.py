@@ -19,12 +19,12 @@ import pdfGenerator as pdfgen
 import warnings
 import SpeechAndTextProcessing as sp
 from GenderDetection import genderDetectionOpenCV as gd
+import plot as pt
 import symptomList
 import DiseaseToMedicine
 import TreeRunner as tr
 import exportToDatabase as database
 
-from reportsAnalyserScreen import reportsAnalyserScreenApp
 
 # Layout inside the window
 class mainScreenLayout(BoxLayout):
@@ -55,6 +55,8 @@ class mainScreenLayout(BoxLayout):
         self.pdf = None
         self.medication = None
         self.DB = None
+        self.confidence = 0
+        self.plt = pt.graph()
         self.questions = ["self.start1()", "self.start2()", "self.start3()", "self.predictDisease()",
                           "self.predictMedication()", "self.printPrescription()", "self.startExportingToDatabase()"]
 
@@ -191,13 +193,25 @@ class mainScreenLayout(BoxLayout):
         self.age = self.data[2]
 
     def predictDisease(self):
-        self.disease = self.tree.predict(self.processData())
-        if self.language == "english":
-            self.speak.textToSpeech(("You might have " + str(self.disease)))
-            self.onBaymaxResponse(("You might have " + str(self.disease)))
+        self.disease, self.confidence = self.tree.predict(self.processData())
+        if self.confidence > 0.5:
+            if self.language == "english":
+                self.speak.textToSpeech(("There is " + str(self.confidence*100) + "percent chance that you might have "
+                                         + str(self.disease)))
+                self.onBaymaxResponse(("There is " + str(self.confidence*100) + "percent chance that "))
+                self.onBaymaxResponse(("You might have " + str(self.disease)))
+            else:
+                self.speak.textToSpeech("Aapko" + str(self.disease) + "Hone ki " + str(self.confidence*100) +
+                                        " pratishat ashanka hai.")
+                self.onBaymaxResponse("आपको " + str(self.disease) + " होने की " + str(self.confidence*100) +
+                                      " प्रतिशत आशंका है", "MANGAL")
         else:
-            self.speak.textToSpeech("Aapko" + str(self.disease) + "Hone ki ashanka hai.")
-            self.onBaymaxResponse("आपको " + str(self.disease) + " होने की आशंका है", "MANGAL")
+            if self.language == "english":
+                self.speak.textToSpeech("You just need some bed rest.")
+                self.onBaymaxResponse("You just need some bed rest.")
+            else:
+                self.speak.textToSpeech("Aapko bas thode araam ki zarurat hai")
+                self.onBaymaxResponse("आपको बस थोड़े आराम की ज़रूरत है")
 
     def predictMedication(self):
         if self.language == "english":
@@ -209,11 +223,11 @@ class mainScreenLayout(BoxLayout):
         self.medication = list()
         for item in self.symptoms:
             try:
-                self.medication = self.medication.append(DiseaseToMedicine.DrugName[item])
+                self.medication.append(DiseaseToMedicine.DrugName[item])
             except KeyError:
                 pass
         try:
-            self.medication = self.medication.append(DiseaseToMedicine.DrugName[self.disease])
+            self.medication.append(DiseaseToMedicine.DrugName[self.disease])
         except KeyError:
             pass
 
@@ -235,6 +249,18 @@ class mainScreenLayout(BoxLayout):
         self.DB = database.exportToDB(self.name, self.age, self.gender, self.disease, self.symptoms, self.medication)
         self.DB.export()
 
+    def onHelpPress(self):
+        self.speak.textToSpeech("kirpaya screen ke saamne sthir hokar baith jaae aur camera mein dekhe. Baymax ko challu"
+                                " karne ke liye neeche daaein side mein jo start ka button hai wo dabaien. Baymax ke "
+                                "sawwalon ka type karke ya bol ka javab dein.")
+        self.speak.textToSpeech("Please sit in from of screen and see in the camera. Press start baymax button present "
+                                "on lower righr side in screen. Answer the questions asked by baymax by typing or "
+                                "speaking.")
+
+    def onAnalyseButtonPress(self):
+        self.plt.plotDB(self.name)
+        self.plt.plotting()
+
 # Actual window
 class mainScreenApp(App):
     def build(self):
@@ -242,7 +268,3 @@ class mainScreenApp(App):
         self.icon = "./assets/icons/baymaxIcon.png"
         Window.fullscreen = 'auto'
         return mainScreenLayout()
-
-    def onReportsAnalyserButtonPress(self):
-        self.get_running_app().stop()
-        reportsAnalyserScreenApp().run()

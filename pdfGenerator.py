@@ -33,7 +33,7 @@ class pdfGenerator:
         if medications is None:
             medications = []
         self.medications = medications
-        y = ', '.join(map(str, self.medications))
+        y = '\n'.join(map(str, self.medications))
         self.y = y
 
     def introduce (self):
