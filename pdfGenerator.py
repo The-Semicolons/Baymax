@@ -45,7 +45,7 @@ class pdfGenerator:
         pdf.cell(60, -48, txt = "Symptoms - " + self.x, ln = 1, align = 'L')
         pdf.set_font("Arial", 'B', size = 20)  
         pdf.cell(60, 80, txt = "Predicted disease - " + self.disease, ln = 1, align = 'L')
-        pdf.set_font("Arial", size = 20)
+        pdf.set_font("Arial", size = 12)
         pdf.cell(200, 10, txt="Prescribed medications - " + self.y, ln=1, align='L')
 
     def pdf_output(self):

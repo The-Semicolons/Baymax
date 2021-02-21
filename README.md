@@ -7,8 +7,9 @@ AI based MedBot to diagnose diseases and prescribe medicines in health care cent
 
 ## Uniqueness:
 - Multilingual
+- Computer voice processing
 - Voice recognition
-- Sign-language recognition
+- Prescription generate
 - Lab reports analysis
 
 ## Technologies Used : 
@@ -20,7 +21,7 @@ AI based MedBot to diagnose diseases and prescribe medicines in health care cent
 - Python 3.8 64 bit strictly
 - kivy
 - ffpyplayer
-- Tensorflow 2.0
+- Tensorflow 2.4
 - Keras
 - pyttsx3
 - PyAudio
@@ -28,3 +29,8 @@ AI based MedBot to diagnose diseases and prescribe medicines in health care cent
 - OpenCV
 - NLTK
 - mysql.connector
+- matplotlib
+- google text api
+- pandas
+- numpy
+- scipy

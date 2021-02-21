@@ -8,11 +8,7 @@
 # Python Files
 from splashScreen import splashScreenApp
 
-# Temporary
-from mainScreen import mainScreenApp
-
 if __name__ == '__main__':
-    #splashScreenApp().run()
-    mainScreenApp().run()
+    splashScreenApp().run()
 
 

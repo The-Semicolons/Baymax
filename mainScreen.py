@@ -31,17 +31,13 @@ class mainScreenLayout(BoxLayout):
     def __init__(self, **kwargs):
         super(mainScreenLayout, self).__init__(**kwargs)
         warnings.filterwarnings('ignore')
-        self.gender = "Male"
-        '''
         self.gender = gd.video()
         if self.gender == "man":
             self.speak = sp.SpeechTextProcessing(0)
         else:
             self.speak = sp.SpeechTextProcessing(1)
         print(self.gender)
-        '''
         self.tree = tr.TreeRunner()
-        self.speak = sp.SpeechTextProcessing(1)
         # user details
         self.name = None
         self.age = None
@@ -138,6 +134,7 @@ class mainScreenLayout(BoxLayout):
             self.onBaymaxResponse("नमस्कार", "MANGAL")
 
     def start(self):
+        self.index = 0
         self.onBaymaxResponse("Please Select a Language: English / Hindi")
         self.onBaymaxResponse("कृपया एक भाषा चुनें: अंग्रेजी / हिंदी", "MANGAL")
         self.speak.textToSpeech("Please Select a Language: English or Hindi. Kripya eak Bhaashaaa Chunei: Angrezi yaa Hindi")
