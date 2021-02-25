@@ -148,4 +148,4 @@ class treeClassifier:
         prediction = self.tree.predict(input_fn, predict_keys=None, hooks=None, checkpoint_path=None,
                                        yield_single_examples=True)
         disease = numpy.argmax(list(prediction)[0]['logits'])
-        return self.diseases[int(disease)], 0.7654
+        return self.diseases[int(disease)], 0.633

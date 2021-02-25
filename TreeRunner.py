@@ -16,7 +16,6 @@ class TreeRunner:
         self.tree.generateFeatureColumn()
         self.tree.constructTree()
         self.tree.trainTree()
-        self.tree.evaluateTree()
         self.tree.saveTreeModel()
 
     def predict(self, symptomList):
