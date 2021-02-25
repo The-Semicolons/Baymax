@@ -13,9 +13,9 @@ AI based MedBot to diagnose diseases and prescribe medicines in health care cent
 - Lab reports analysis
 
 ## Technologies Used : 
-**Programming language** – Python
-**Frameworks** – TensorFlow
-**Supporting Libraries** – Keras, OpenCV, NLTK
+- **Programming language** – Python
+- **Frameworks** – TensorFlow
+- **Supporting Libraries** – Keras, OpenCV, NLTK
 
 ## Dependencies
 - Python 3.8 64 bit strictly
