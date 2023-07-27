@@ -1,56 +1,78 @@
-# Baymax
-Low budget solution for medical scarcity in rural/remote areas. The application is able to communicate with patients and diagnosing them properly.
+# Baymax - Low Budget Medical Aid Solution for Rural and Remote Areas
 
-[Check out Project Website!](https://baymax.ml/)
+## Introduction
+
+Baymax is a low-budget medical aid solution designed to address the scarcity of medical assistance in rural, remote, and even urban areas. The application aims to provide efficient medical diagnosis and treatment recommendations by leveraging advanced technologies such as voice recognition, machine learning, computer vision, and multi-language support. Baymax can communicate with patients through voice, text, and even sign-language, making it accessible to individuals with different abilities.
 
 ## Problem
-The problem we are focussing on is Medical aid scarcity in rural, remote and even urban areas. Let us onsider the following cases:-
-- ### Rural area
-    A farmer from rural area got sick he needs diagnosis. He reaches out the nearest health centre constructed by govt. But he is unable to get diagnosed. Then the farmer heads to nearest city to get diagnosis. A farmer's whole day is wasted to get diagnosed along with travelling cost.
-- ### Remote area
-    A person from remote area got sick he needs diagnosis. He reaches out the nearest health centre constructed by govt. But he is unable to get diagnosed. Next he calls out city to get some transportation like ambulance/air ambulance, then get's transfered to a city hospital. Calling an ambulance/air ambulance cost enormous amount of money and time.
-- ### Urban area
-    A person in a city got sick he needs diagnosis. He reaches out the nearest health centre, But it takes enormous amount of time to get diagnosed by a doctor because of overcrowding in the doctor's clinic.
+
+In many parts of the world, people face challenges in accessing medical aid, especially in rural and remote areas. This results in wasted time, money, and sometimes critical delays in receiving proper medical diagnosis and treatment. Even in urban areas, overcrowding in clinics can cause significant delays in the diagnostic process.
 
 ## Solution
-The Health Assistant is capable of diagnosing diseases by taking voice/text/sign-language as an input of primary details of patients. The symptoms are processed using decision trees with Ada boost algorithm and thereby treatment is prescribed for the same. It detects their gender using Computer Vision and thus assigns the voice accordingly.
-- ### Rural area
-    In the above problem case, the farmer could have been diagnosed under few hours by installing our application in the health centre. He wouldn't have lost his time and money to travel to a city. The farmer just needed to tell baymax what are his symptoms, and baymex would have suggested him medicines and test as per the need.
-- ### Remote area
-    The person who got sick in the remote are could have been treetes at the nearest health centre by just telling baymax what his symptoms are. The cost and time for calling an ambulance/air ambulance could have been saved.
-- ### Urban area
-    It took enormous amount of time for the person to get diagnosed in the doctor's clinic. If doctor takes 10 minutes to diagnose a patient, it will take 100 minutes to diagnose 10. If Baymax is installed in doctor's clinic, it will take 10 minutes for doctor to see a patient and same 10 minutes for baymax. Then just another minute for doctor to verify baymax's diagnosis. So just 11 minutes to diagnose 2 patients hence total time to diagnose 10 patients is brought down to 55, saving 45 minutes of a doctor.
 
-## Technology used
-- ### Programming Language
-    Python is selected to be the main programming language for our application because it has multiplatform support and is easy to work with in case of Machine learning applications.
-- ### Tensorflow
-    Tensorflow is used to construct the Decision tree with ada boost algorithm, also known as boosted tree classifier. The Decision tree is trained on a dataset that relates diseases to it's symptoms.
-- ### Keras
-    Keras is used to to create a DNN and was trained over 5000 images to detect the gender of a person sitting in front of Baymax.
-- ### OpenCV
-    OpenCV is used to capture the image, detect the face, process the image to make it suitable to be fed into DNN. Further DNN detects whether the person is male of female.
-- ### Kivy
-    Kivy is used to construct the GUI through kivy language. Kivy is preffered because of it's multi platform support and dynamic nature.
-- ### NLTK
-    NLTK is used for text processing and extract the usefull information from the user giving the user a human like interaction while talking to baymax.
-- ### Google Voice
-    Google voice API is used to recognise and translate what a user said to english which is then fed to language processor for further operations.
-- ### Oracle's MySQL
-    Oracle's MySQL is used to store and keep track of user's medical record including prescriptions, diagnosis and medical test reports.
+Baymax offers a comprehensive solution to tackle medical aid scarcity in various scenarios:
 
-## Uniqueness
-- ### Multilingual
-    Our application is able to interact with the patients in multiple languages including English, Hindi, Marathi, Bengali, Tamil, Telugu etc.
-- ### Cross Platform
-    The application is can be installed on multiple platforms like Windows, Mac, Linux and even android without any significant changes.
-- ### Voice Recognition
-    Baymax is able to understand what you are sying in any local language and can easily translate to any other language.
-- ### Sign LAnguage Recognition
-    For the people who are hearing and speech impaired can easily interact with baymax through sign language.
-- ### Computer Vision
-    Computer vision is used to make Baymax's interaction with human better by changing the voice of baymax to female voice for a female patient.
-- ### Friendly GUI
-    Gui on which the application is made is very simple and easy to use. Even if someone is stuck in between they click the "Help" button and Baymax will dictate how to use.
-- ### Encrypted Database
-    Oracle's MySQL is used to store all the critical information of the user. Though MySQL is an encrypted database all the patient's data is safe.
+- **Rural Area**: Instead of traveling to distant cities, patients can visit the nearest health center equipped with Baymax. By communicating their symptoms, the application can diagnose their condition and suggest appropriate treatments and tests.
+
+- **Remote Area**: People in remote areas can benefit from Baymax installed in local health centers. The application's diagnosis capabilities help avoid the need for costly ambulance or air ambulance services.
+
+- **Urban Area**: Baymax can assist doctors in urban clinics to speed up the diagnostic process. By leveraging machine learning algorithms, Baymax can quickly analyze patient symptoms, reducing the time required for each diagnosis.
+
+## Features
+
+- Voice, text, and sign-language communication with patients.
+- Efficient diagnosis using decision trees with AdaBoost algorithm.
+- Gender detection through computer vision for personalized interactions.
+- Multi-language support including English, Hindi, Marathi, Bengali, Tamil, Telugu, etc.
+- Cross-platform compatibility for Windows, Mac, Linux, and Android.
+- Google Voice API integration for language translation.
+- Friendly GUI with a "Help" button for user guidance.
+- Encrypted database using Oracle's MySQL for secure storage of patient records.
+
+## Technologies Used
+
+- Programming Language: Python
+- Machine Learning: TensorFlow, Keras
+- Computer Vision: OpenCV
+- GUI Development: Kivy
+- Natural Language Processing: NLTK
+- Voice Recognition: Google Voice API
+- Database: Oracle's MySQL
+
+Sure, here's some additional technical information about the Baymax project:
+
+## Technical Information
+
+### Decision Trees with AdaBoost Algorithm
+
+Baymax utilizes the Decision Tree algorithm with the AdaBoost (Adaptive Boosting) technique for disease diagnosis. Decision trees are constructed based on a dataset that correlates diseases to their symptoms. AdaBoost helps improve the accuracy of decision trees by combining multiple weak learners (in this case, decision trees) to create a strong learner.
+
+### Deep Neural Network (DNN) for Gender Detection
+
+To detect the gender of a person interacting with Baymax, a Deep Neural Network (DNN) is used. This DNN is trained on a dataset of over 5000 images containing various individuals' faces with their respective genders labeled. The DNN can accurately determine whether the person in front of Baymax is male or female, enabling personalized interactions.
+
+### Natural Language Processing (NLP) with NLTK
+
+Baymax incorporates Natural Language Processing (NLP) using the NLTK (Natural Language Toolkit) library. NLP is used for text processing to extract useful information from the user's input. It helps Baymax understand the symptoms described by the patients and interact with them in a more human-like manner.
+
+### Cross-Platform Development with Kivy
+
+The Graphical User Interface (GUI) of Baymax is developed using Kivy, a Python library for cross-platform development. Kivy allows Baymax to be installed and used seamlessly on various platforms, including Windows, Mac, Linux, and Android, without significant code changes.
+
+### Voice Recognition with Google Voice API
+
+To enable voice communication with patients in different languages, Baymax integrates with the Google Voice API. The API recognizes and translates the patient's spoken language into English, facilitating further language processing and diagnosis.
+
+### Computer Vision with OpenCV
+
+Computer vision is a crucial component of Baymax's interactions with patients. OpenCV is used to capture the image of the patient, detect their face, and process the image to make it suitable for feeding into the gender detection DNN. This ensures the application's ability to provide personalized interactions based on gender.
+
+### Encrypted Database with Oracle's MySQL
+
+Baymax stores all critical patient information, including medical records, prescriptions, diagnosis, and test reports, in an encrypted database. Oracle's MySQL is chosen as the database management system to ensure data security and confidentiality.
+
+These technical aspects of Baymax combine to create a robust and efficient low-budget medical aid solution. By employing machine learning, computer vision, natural language processing, and cross-platform development, Baymax addresses the challenges of medical scarcity in various settings, providing accessible and timely medical assistance to patients in need.
+
+## License
+
+Baymax is open-source software licensed under the MIT License. Feel free to use, modify, and distribute the application in accordance with the terms of the license.
